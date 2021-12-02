@@ -14,86 +14,91 @@ import java.sql.*;
 
 public class App
 {   
-    
+    public JPanel panel;   
+    public JFrame frame;
+    public JButton addManually;
+    public JButton addFromDB;
+    public JButton deleteS;
+    public JList<Artist> jList;
+    public JScrollPane scrollerA;
+    public JMenuBar menuBar;
+    public JMenuItem menu;
+    public GridBagLayout layoutEast;
+    public GridBagConstraints c;
+    public JPanel panelEast;
+    public JLabel labelDob;
+    public JTextField fieldDob;
+    public JLabel labelPob;
+    public JTextField fieldPob;
+    public JLabel labelBow;
+    public JTextField fieldBow;
+    public JTextArea textArea;
+    public JScrollPane scrollerS;
     
     App() {
-        JFrame frame = new JFrame("Wiktoria Szitenhelm: Assignment 2");
-        JPanel panel = new JPanel();
+        frame = new JFrame("Wiktoria Szitenhelm: Assignment 2");
+        panel = new JPanel();
         panel.setBackground(Color.darkGray);
-        JButton addManually = new JButton("Add Data Manually");
+        addManually = new JButton("Add Data Manually");
         addManually.addActionListener(new AddManuallyListener());
-       
-        /*addManually.addActionListener(e ->  {
-            System.out.println( "Hello World!" );
-            System.out.println( "boon" );
-        }); */
-              
-        /*addManually.addActionListener(e ->  {
-            Utils toCreate = new Utils();
-            toCreate.createExampleArtists(JList<Artist> jList);
-            scrollerA.setModel(new DefaultListModel());
-            ((DefaultListModel)scrollerA.getModel()).addElement(jList);
-            System.out.println( "Hello World!" );
-            System.out.println( "boon" );
-        });*/
-        
         
         /*Utils toCreate = new Utils();
         Connection conn = null;
         conn = toCreate.connectToDatabase();*/
-        
-        
-        JButton addFromDB = new JButton("Add Data Fron Database");
-        JButton deleteS = new JButton("Delete Selected");
+              
+        addFromDB = new JButton("Add Data Fron Database");
+        addFromDB.addActionListener(new AddFromDB());
+        deleteS = new JButton("Delete Selected");
         panel.add(addManually);
         panel.add(addFromDB);
         panel.add(deleteS);
     
-        JList jList = new JList();
-        JScrollPane scrollerA = new JScrollPane(jList);
+        jList = new JList();
+        jList.setModel(new DefaultListModel());
+        scrollerA = new JScrollPane(jList);
         scrollerA.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);    
-        JMenuBar menuBar = new JMenuBar();
-        JMenuItem menu = new JMenuItem("About");
+        menuBar = new JMenuBar();
+        menu = new JMenuItem("About");
         menu.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Assignment", "pop up info", JOptionPane.INFORMATION_MESSAGE));
         menuBar.add(menu);
-        GridBagLayout layoutEast = new GridBagLayout();
-        GridBagConstraints c = new GridBagConstraints();
-        JPanel panelEast = new JPanel();
+        layoutEast = new GridBagLayout();
+        c = new GridBagConstraints();
+        panelEast = new JPanel();
         panelEast.setLayout(layoutEast);
-        JLabel labelDob = new JLabel("Date of Birth:");
+        labelDob = new JLabel("Date of Birth:");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 0;
         panelEast.add(labelDob, c);
-        JTextField fieldDob = new JTextField(" ");
+        fieldDob = new JTextField(" ");
         c.fill = GridBagConstraints.HORIZONTAL;
         fieldDob.setPreferredSize( new Dimension( 100, 24 ) );
         c.gridx = 1;
         c.gridy = 0;
         panelEast.add(fieldDob, c);
-        JLabel labelPob = new JLabel("Place of Birth:");
+        labelPob = new JLabel("Place of Birth:");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 1;
         panelEast.add(labelPob, c);
-        JTextField fieldPob = new JTextField();
+        fieldPob = new JTextField();
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 1;
         panelEast.add(fieldPob, c);  
-        JLabel labelBow = new JLabel("Born on Weekend:");
+        labelBow = new JLabel("Born on Weekend:");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 2;
         panelEast.add(labelBow, c);
-        JTextField fieldBow = new JTextField();
+        fieldBow = new JTextField();
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 2;
         panelEast.add(fieldBow, c);
         // ?
-        JTextArea textArea = new JTextArea();
-        JScrollPane scrollerS = new JScrollPane(textArea);
+        textArea = new JTextArea();
+        scrollerS = new JScrollPane(textArea);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridwidth = 2;
         c.ipady = 400;
@@ -110,18 +115,25 @@ public class App
         frame.setVisible(true);
     }
           
-    /*class AddManuallyListener implements ActionListener {
+    class AddManuallyListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             Utils toCreate = new Utils();
-            toCreate.createExampleArtists(JList<Artist> jList);
-            scrollerA.setModel(new DefaultListModel());
-            ((DefaultListModel)scrollerA.getModel()).addElement(jList);
-            System.out.println( "Hello World!" );
-            System.out.println( "boon" );
+            toCreate.createExampleArtists(jList);
+            addManually.setEnabled(true);
             System.out.println( "worked!!!" );
             }
-    }*/
+    }
+    
+    class AddFromDB implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Utils toCreate = new Utils();
+            toCreate.readArtistAndSongsFromDatabase(jList);
+            System.out.println( "worked!!!" );
+            }
+    }
+    
    
     public static void main( String[] args )
     {

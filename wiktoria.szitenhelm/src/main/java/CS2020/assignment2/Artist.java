@@ -10,8 +10,14 @@ public class Artist {
     private String placeOfBirth;
     private ArrayList<Song> songs;
     
+    public String toString() { 
+        return firstName + " " + lastName;
+    }
+
+        
     Artist () {
         this.artistID = UUID.randomUUID();
+        this.songs = new ArrayList<Song>();
     }
     
     // is there any point in this method? 

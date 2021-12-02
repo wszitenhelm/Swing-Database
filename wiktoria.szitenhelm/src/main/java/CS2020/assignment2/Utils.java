@@ -46,7 +46,7 @@ class Utils {
     }
     
     public static void createExampleArtists(JList<Artist> list) {
-        list.setModel(new DefaultListModel());
+        //list.setModel(new DefaultListModel());
         Artist artist1 = new Artist();
         artist1.setLastName("Blunt*");
         artist1.setFirstName("James");
@@ -56,9 +56,7 @@ class Utils {
         Song song2 = new Song();
         artist1.addSong(song1);
         artist1.addSong(song2);
-        //(DefaultListModel)<Artist>list.getModel().addElement(artist1);
         ((DefaultListModel)list.getModel()).addElement(artist1);
-        //DefaultListModel<Artist> model = (DefaultListModel)list.getModel().addElement(artist1);
         Artist artist2 = new Artist();
         artist2.setLastName("Perry*");
         artist2.setFirstName("Katy");
@@ -69,15 +67,13 @@ class Utils {
         artist2.addSong(song3);
         artist2.addSong(song4);
         ((DefaultListModel)list.getModel()).addElement(artist2);
-        //(DefaultListModel)<Artist>list.getModel().addElement(artist2);
-        //DefaultListModel model = (DefaultListModel)list.getModel().addElement(artist2);
     }
     
     public static Connection connectToDatabase() {
         Connection conn = null;
         try {
             //String url = "jdbc:sqlite:/home/codio/workspace/CS2020assignment2/resources/CS2020assignment2.db";
-            conn = DriverManager.getConnection("jdbc:sqlite:/home/codio/workspace/CS2020assignment2/resources/CS2020assignment2.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:/home/codio/workspace/CS2020assignment2/resources/CS2020-assignment2.db");
             System.out.println("Connection to SQlite has been established");
         }
         // not return here?
@@ -114,9 +110,10 @@ class Utils {
         ResultSet rs2=null;
         con = connectToDatabase();
         try {
-            String sql1 ="SELECT * FROM ..";
+            String sql1 ="SELECT * FROM Artist";
             p1 = con.prepareStatement(sql1);
             rs1 = p1.executeQuery();
+            
             
             while (rs1.next()) {
                 String artistId1 = rs1.getString("artistID");
@@ -125,7 +122,8 @@ class Utils {
                 String dob = rs1.getString("dob");
                 String[] splittedName = wholeName.split(" ");
                 String name = splittedName[0];
-                String surname = splittedName[2];
+                int length = splittedName.length;
+                String surname = splittedName[length-1];
                 Artist artist = new Artist();
                 UUID uuidA = UUID.fromString(artistId1);
                 artist.setArtistID(uuidA);
@@ -133,7 +131,6 @@ class Utils {
                 artist.setLastName(surname);
                 artist.setPlaceOfBirth(pob);
                 artist.setDob(dob);
-                list.setModel(new DefaultListModel());
                 ((DefaultListModel)list.getModel()).addElement(artist);
                 String sql2 = "SELECT * FROM Song";
                 p2 = con.prepareStatement(sql2);
