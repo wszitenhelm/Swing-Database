@@ -1,4 +1,5 @@
-package util;
+package CS2020.assignment2;
+import java.util.UUID;
 
 public class Song {
     private UUID songID;
@@ -8,35 +9,35 @@ public class Song {
    
     //Song (UUID songID) {}
     
-    public void setSongID (songID) {
+    public void setSongID (UUID songID) {
         // shouldn't be ? 
         // this.songID = UUID.randomUUID();
         this.songID = songID;
     }
-    public UUID getSongID {
+    public UUID getSongID() {
         return songID;
     }
     
-    public void setArtistID (artistID) {
+    public void setArtistID (UUID artistID) {
         // should't be
         // // this.artistID = UUID.randomUUID();
         this.artistID = artistID; 
     }
-    public UUID getArtistID {
+    public UUID getArtistID() {
         return artistID;
     }
     
-    public void setTitle (title) {
+    public void setTitle (String title) {
         this.title = title;
     }
-    public String getTitle{
+    public String getTitle() {
         return title;
     }
     
-    public void setDuration (duration) {
+    public void setDuration (int duration) {
         this.duration = duration;
     }
-    public int getDuration {
+    public int getDuration() {
         return duration;
     }
 }
