@@ -13,13 +13,16 @@ import java.sql.*;
 
 
 public class App
-{
+{   
+    
+    
     App() {
         JFrame frame = new JFrame("Wiktoria Szitenhelm: Assignment 2");
         JPanel panel = new JPanel();
         panel.setBackground(Color.darkGray);
         JButton addManually = new JButton("Add Data Manually");
-        
+        addManually.addActionListener(new AddManuallyListener());
+       
         /*addManually.addActionListener(e ->  {
             System.out.println( "Hello World!" );
             System.out.println( "boon" );
@@ -45,16 +48,13 @@ public class App
         panel.add(addManually);
         panel.add(addFromDB);
         panel.add(deleteS);
+    
         JList jList = new JList();
         JScrollPane scrollerA = new JScrollPane(jList);
         scrollerA.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);    
         JMenuBar menuBar = new JMenuBar();
-        //JMenu menu = new JMenu("About");
-        // must be button otherwise doesn't work
-        JButton menu = new JButton("About");
-        //workspace/CS2020assignment2/wiktoria.szitenhelm/src/main/java/CS2020/assignment2/java.jpg
-        final ImageIcon icon = new ImageIcon("/workspace/CS2020assignment2/wiktoria.szitenhelm/src/main/java/CS2020/assignment2/java.jpg");
-        menu.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Assignment", "pop up info", JOptionPane.INFORMATION_MESSAGE, icon));
+        JMenuItem menu = new JMenuItem("About");
+        menu.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Assignment", "pop up info", JOptionPane.INFORMATION_MESSAGE));
         menuBar.add(menu);
         GridBagLayout layoutEast = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
@@ -109,16 +109,16 @@ public class App
         frame.setSize(800, 600);
         frame.setVisible(true);
     }
-    
-    /*public class MenuListener implements ActionListener {
-        public void actionPerformed(ActionEvent a) {
-            JOptionPane.showMessageDialog(frame, "good");
-        }
-    }*/
-       
+          
     /*class AddManuallyListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Utils toCreate = new Utils();
+            toCreate.createExampleArtists(JList<Artist> jList);
+            scrollerA.setModel(new DefaultListModel());
+            ((DefaultListModel)scrollerA.getModel()).addElement(jList);
+            System.out.println( "Hello World!" );
+            System.out.println( "boon" );
             System.out.println( "worked!!!" );
             }
     }*/
