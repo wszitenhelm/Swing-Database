@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 import CS2020.assignment2.Utils;
@@ -10,7 +12,8 @@ import CS2020.assignment2.Artist;
 import CS2020.assignment2.Song;
 import java.util.ArrayList;
 import java.sql.*;
-
+import java.util.HashMap;
+import java.util.UUID;
 
 public class App
 {   
@@ -40,21 +43,21 @@ public class App
         panel = new JPanel();
         panel.setBackground(Color.darkGray);
         addManually = new JButton("Add Data Manually");
-        addManually.addActionListener(new AddManuallyListener());
-        
-        /*Utils toCreate = new Utils();
-        Connection conn = null;
-        conn = toCreate.connectToDatabase();*/
-              
+        addManually.addActionListener(new AddManuallyListener());     
         addFromDB = new JButton("Add Data Fron Database");
         addFromDB.addActionListener(new AddFromDB());
         deleteS = new JButton("Delete Selected");
+        deleteS.setEnabled(false);
         panel.add(addManually);
         panel.add(addFromDB);
-        panel.add(deleteS);
-    
+        panel.add(deleteS);   
         jList = new JList();
         jList.setModel(new DefaultListModel());
+        
+        
+        //ModelWithSorting implements ListModel
+            
+            
         scrollerA = new JScrollPane(jList);
         scrollerA.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);    
         menuBar = new JMenuBar();
@@ -71,6 +74,7 @@ public class App
         c.gridy = 0;
         panelEast.add(labelDob, c);
         fieldDob = new JTextField(" ");
+        fieldDob.setEditable(false);
         c.fill = GridBagConstraints.HORIZONTAL;
         fieldDob.setPreferredSize( new Dimension( 100, 24 ) );
         c.gridx = 1;
@@ -82,6 +86,7 @@ public class App
         c.gridy = 1;
         panelEast.add(labelPob, c);
         fieldPob = new JTextField();
+        fieldPob.setEditable(false);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 1;
@@ -92,6 +97,7 @@ public class App
         c.gridy = 2;
         panelEast.add(labelBow, c);
         fieldBow = new JTextField();
+        fieldBow.setEditable(false);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 2;
@@ -113,6 +119,61 @@ public class App
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         frame.setSize(800, 600);
         frame.setVisible(true);
+        ListSelectionListener listSelectionListener = new ListSelectionListener() {
+          public void valueChanged(ListSelectionEvent listSelectionEvent) {
+            boolean adjust = listSelectionEvent.getValueIsAdjusting();
+            if (!adjust) {
+              JList list = (JList) listSelectionEvent.getSource();
+              int selections[] = list.getSelectedIndices();
+             if (selections.length > 0) {
+              deleteS.setEnabled(true);      
+                
+              Object selectionValues[] = list.getSelectedValues();
+              String dob = ((Artist)selectionValues[0]).getDob();
+              fieldDob.setText(dob);
+              String pob = ((Artist)selectionValues[0]).getPlaceOfBirth();
+              fieldPob.setText(pob);
+              //static !!!! no need to create Utilis u = new Utilis();
+              boolean result = Utils.checkIfBornOnWeekend(dob);
+              if (result == true) {
+                  fieldBow.setText("yes");
+              }
+              else {
+                  fieldBow.setText("no");
+              }
+                 
+             
+              ArrayList<Song> listOfSongs = ((Artist)selectionValues[0]).getSongs();
+              HashMap<UUID, String> songs = Utils.returnSongDurationAndTitleFormatted(listOfSongs);
+              System.out.println(listOfSongs);
+              textArea.setText("");
+              int a = 1;
+              for (String song: songs.values()) {
+                  textArea.append(a + ". " + song+ "\n");
+                  a += 1;
+              }              
+             }            
+            }
+          }
+          };
+        jList.addListSelectionListener(listSelectionListener);
+        
+        class DeleteArtistListener implements ActionListener {
+                @Override 
+                public void actionPerformed(ActionEvent e) {
+                    int decision = JOptionPane.showConfirmDialog(frame, "Are you sure?");
+                    if (decision == JOptionPane.YES_OPTION){
+                        int selected = jList.getSelectedIndex();
+                        ((DefaultListModel)jList.getModel()).remove(selected);
+                        System.out.println("deleted ");
+                    }
+                    else {
+                        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                    }
+                }
+              }
+                
+              deleteS.addActionListener(new DeleteArtistListener()); 
     }
           
     class AddManuallyListener implements ActionListener {
@@ -120,8 +181,11 @@ public class App
         public void actionPerformed(ActionEvent e) {
             Utils toCreate = new Utils();
             toCreate.createExampleArtists(jList);
-            addManually.setEnabled(true);
-            System.out.println( "worked!!!" );
+            
+            //jList.getModel.sort();
+            
+            addManually.setEnabled(false);
+            System.out.println( "addActionListener worked!!!" );
             }
     }
     
@@ -130,11 +194,11 @@ public class App
         public void actionPerformed(ActionEvent e) {
             Utils toCreate = new Utils();
             toCreate.readArtistAndSongsFromDatabase(jList);
+            addFromDB.setEnabled(false);
             System.out.println( "worked!!!" );
             }
     }
     
-   
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );

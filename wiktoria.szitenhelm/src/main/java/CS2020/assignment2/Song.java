@@ -8,6 +8,9 @@ public class Song {
     private int duration;
    
     //Song (UUID songID) {}
+    public String toString() { 
+        return title;
+    }
     
     public void setSongID (UUID songID) {
         // shouldn't be ? 
