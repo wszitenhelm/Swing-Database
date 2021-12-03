@@ -37,12 +37,10 @@ class Utils {
     
     public static boolean checkIfBornOnWeekend(String dob){
         //return true if artis was born on the weekend, false otherwise 
-        System.out.println(dob);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
         LocalDate day = LocalDate.parse(dob, formatter); 
         //String weekday = day.getDayOfWeek().toString(); 
         String weekday = day.getDayOfWeek().name();
-        System.out.println(weekday);
         //check if weekend
         if (weekday.equals("SATURDAY") || weekday.equals("SUNDAY")){
             return true;

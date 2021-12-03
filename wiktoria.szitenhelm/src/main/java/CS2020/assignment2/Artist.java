@@ -2,7 +2,7 @@ package CS2020.assignment2;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Artist {
+public class Artist implements Comparable<Artist>{
     private UUID artistID;
     private String firstName;
     private String lastName;
@@ -12,6 +12,12 @@ public class Artist {
     
     public String toString() { 
         return firstName + " " + lastName;
+    }
+    
+    @Override
+    public int compareTo(Artist o) 
+    {
+        return this.getFirstName().compareTo( o.getFirstName() );
     }
 
         
