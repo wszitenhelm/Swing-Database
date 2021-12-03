@@ -9,6 +9,7 @@ import org.junit.Test;
  */
 public class AppTest 
 {
+    //Artist artist = new Artist();
     /**
      * Rigorous Test :-)
      */

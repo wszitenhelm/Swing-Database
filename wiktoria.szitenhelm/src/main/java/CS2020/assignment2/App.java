@@ -10,6 +10,8 @@ import java.awt.event.*;
 import CS2020.assignment2.Utils;
 import CS2020.assignment2.Artist;
 import CS2020.assignment2.Song;
+//import CS2020.assignment2.ModelWithSorting;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.sql.*;
 import java.util.HashMap;
@@ -52,9 +54,11 @@ public class App
         panel.add(addFromDB);
         panel.add(deleteS);   
         jList = new JList();
+        //SortableListModel sortableListModel = new SortableListModel(listModel);
+        //JList sortableList = new JList(sortableListModel);
         jList.setModel(new DefaultListModel());
         
-        
+        //jList.setModel(new ModelWithSorting());
         //ModelWithSorting implements ListModel
             
             
@@ -104,6 +108,7 @@ public class App
         panelEast.add(fieldBow, c);
         // ?
         textArea = new JTextArea();
+        textArea.setEditable(false);
         scrollerS = new JScrollPane(textArea);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridwidth = 2;
@@ -166,13 +171,23 @@ public class App
                         int selected = jList.getSelectedIndex();
                         ((DefaultListModel)jList.getModel()).remove(selected);
                         System.out.println("deleted ");
+                        jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                        jList.setSelectedIndex(0);
                     }
                     else {
                         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                     }
+                    if (jList.getModel().getSize() == 0) {
+                        deleteS.setEnabled(false);
+                        fieldBow.setText("");
+                        fieldPob.setText("");
+                        fieldDob.setText("");
+                        textArea.setText("");
+                        System.out.println("sieze ok");
+                    }
                 }
-              }
                 
+              }
               deleteS.addActionListener(new DeleteArtistListener()); 
     }
           
@@ -183,6 +198,7 @@ public class App
             toCreate.createExampleArtists(jList);
             
             //jList.getModel.sort();
+            //sortJList(jList);
             
             addManually.setEnabled(false);
             System.out.println( "addActionListener worked!!!" );
@@ -194,10 +210,38 @@ public class App
         public void actionPerformed(ActionEvent e) {
             Utils toCreate = new Utils();
             toCreate.readArtistAndSongsFromDatabase(jList);
+            
+            //jList.getModel.sort();
+            //sortJList(jList);
+            
             addFromDB.setEnabled(false);
             System.out.println( "worked!!!" );
             }
     }
+    
+    /*public JList sortJList(JList list) {
+        ListModel model = list.getModel();
+        String[] strings = new String[model.getSize()];
+        for(int i=0;i<strings.length;i++){
+            strings[i]=model.getElementAt(i).toString();
+        }
+        Arrays.sort(strings);
+        list.setListData(strings);
+        return list;
+    }*/
+    
+    /*public void sortJList(JList list) {
+        ListModel model = list.getModel();
+        int n = model.getSize();
+        String[] data = new String[n];
+        
+        for(int i=0;i<n;i++){
+            data[i] = (String) model.getElementAt(i);
+        }
+        Arrays.sort(data);
+        list.setListData(data);
+    }*/
+        
     
     public static void main( String[] args )
     {

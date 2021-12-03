@@ -12,10 +12,11 @@ public class Song {
         return title;
     }
     
-    public void setSongID (UUID songID) {
+    //UUID songID
+    public void setSongID () {
         // shouldn't be ? 
-        // this.songID = UUID.randomUUID();
-        this.songID = songID;
+        this.songID = UUID.randomUUID();
+        //this.songID = songID;
     }
     public UUID getSongID() {
         return songID;

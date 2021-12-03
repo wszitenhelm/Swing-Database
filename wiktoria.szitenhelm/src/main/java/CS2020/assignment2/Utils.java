@@ -61,8 +61,12 @@ class Utils {
         artist1.setPlaceOfBirth("Tidworth");
         Song song1 = new Song();
         song1.setTitle("You're Beautiful");
+        song1.setDuration(200);
+        song1.setSongID();
         Song song2 = new Song();
         song2.setTitle("Cold");
+        song2.setDuration(240);
+        song2.setSongID();
         artist1.addSong(song1);
         artist1.addSong(song2);
         ((DefaultListModel)list.getModel()).addElement(artist1);
@@ -73,8 +77,12 @@ class Utils {
         artist2.setPlaceOfBirth("Santa Barbara");
         Song song3 = new Song();
         song3.setTitle("Roar");
+        song3.setDuration(182);
+        song3.setSongID();
         Song song4 = new Song();
         song4.setTitle("Teenage Dream");
+        song4.setDuration(199);
+        song4.setSongID();
         artist2.addSong(song3);
         artist2.addSong(song4);
         ((DefaultListModel)list.getModel()).addElement(artist2);
@@ -127,13 +135,13 @@ class Utils {
                 p2.setString(1, artistId1);
                 rs2 = p2.executeQuery();
                 while (rs2.next()) {
-                        String songId = rs2.getString("songID").trim();
+                        //String songId = rs2.getString("songID").trim();
                         String title = rs2.getString("title");
                         int duration = rs2.getInt("duration");
                         title = title.trim();
                         Song song = new Song();
-                        UUID uuidS = UUID.fromString(songId);
-                        song.setSongID(uuidS);
+                        //UUID uuidS = UUID.fromString(songId);
+                        song.setSongID();
                         song.setTitle(title);
                         song.setDuration(duration);
                         artist.addSong(song);
