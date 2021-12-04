@@ -39,6 +39,7 @@ public class App
     public JTextField fieldBow;
     public JTextArea textArea;
     public JScrollPane scrollerS;
+    public JPopupMenu popupmenu;
     
     App() {
         frame = new JFrame("Wiktoria Szitenhelm: Assignment 2");
@@ -189,6 +190,17 @@ public class App
                 
               }
               deleteS.addActionListener(new DeleteArtistListener()); 
+        
+       /*class DeleteArtistMouse implements MouseListener {
+           @Override
+           public void mouseClicked(MouseEvent e) {
+               if (SwingUtilities.isRightMouseButton(e)) {
+                   popupmenu = new JPopupMenu();
+                   int selected = jList.getSelectedIndex();
+                   ((DefaultListModel)jList.getModel()).remove(selected);
+               }
+           }
+       }*/
     }
           
     class AddManuallyListener implements ActionListener {
@@ -218,29 +230,6 @@ public class App
             System.out.println( "worked!!!" );
             }
     }
-    
-    /*public JList sortJList(JList list) {
-        ListModel model = list.getModel();
-        String[] strings = new String[model.getSize()];
-        for(int i=0;i<strings.length;i++){
-            strings[i]=model.getElementAt(i).toString();
-        }
-        Arrays.sort(strings);
-        list.setListData(strings);
-        return list;
-    }*/
-    
-    /*public void sortJList(JList list) {
-        ListModel model = list.getModel();
-        int n = model.getSize();
-        String[] data = new String[n];
-        
-        for(int i=0;i<n;i++){
-            data[i] = (String) model.getElementAt(i);
-        }
-        Arrays.sort(data);
-        list.setListData(data);
-    }*/
         
     
     public static void main( String[] args )
