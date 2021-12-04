@@ -10,30 +10,27 @@ import java.util.ArrayList;
 import java.util.UUID;
 import javax.swing.DefaultListModel;
 import java.sql.*;
-
+import java.util.function.Consumer;
 
 class Utils {
     
-    // implement here this method using lambda expression. ! 
+
     public static HashMap<UUID, String> returnSongDurationAndTitleFormatted(ArrayList<Song> listOfSongs) {
         HashMap<UUID, String> songs = new HashMap<>();
-        int aLength = listOfSongs.size();
-        if (aLength > 0) { 
-            for (int i = 0; i < aLength; i++) {
-                UUID songID = listOfSongs.get(i).getSongID();
-                String songTitle = listOfSongs.get(i).getTitle();
-                int songDuration = listOfSongs.get(i).getDuration();
+        
+        listOfSongs.forEach( (s) -> {UUID songID = s.getSongID();                    
+                String songTitle = s.getTitle();
+                int songDuration = s.getDuration();
                 int seconds = (songDuration % 60);
                 int minutes = ((songDuration - seconds) / 60 );
                 String secondsS =Integer.toString(seconds);
                 String minutesS =Integer.toString(minutes);
-                // System.out.printf("\"%s\", (%s), %d:%02d%n", title, artist, length / 60, length % 60);
                 String songValue = songTitle + "(" + minutesS + ":" + secondsS + ")";
                 songs.put(songID, songValue);
-            }
-        }
-        return songs;
+                 });
+         return songs;     
     }
+
     
     public static boolean checkIfBornOnWeekend(String dob){
         //return true if artis was born on the weekend, false otherwise 
