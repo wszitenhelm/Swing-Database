@@ -1,33 +1,41 @@
-/**package CS2020.assignment2;
-import javax.swing.AbstractListModel;
-import java.util.ArrayList;
-import java.util.Arrays;
+package CS2020.assignment2;
+
 import java.util.Collections;
+import java.util.ArrayList;
+import javax.swing.*;
 
+//change E for different letter
 
-public class ModelWithSorting extends AbstractListModel {
-    ArrayList<Artist> artists;
+public class ModelWithSorting<E extends Comparable<E>> extends AbstractListModel<E> {
+    ArrayList<E> elements;
     
-    public static sortList() {
-        ListModel model = this.getModel();
-        String[] strings = new String[model.getSize()];
-        for(int i=0;i<strings.length;i++){
-            strings[i]=model.getElementAt(i).toString();
-        }
-        Arrays.sort(strings);
-        jl.setListData(strings);
-        
-    } 
+    ModelWithSorting() {
+        this.elements = new ArrayList<>();    
+    }
+    
+    //Sort the contents of the list
+    public void sort() {
+        Collections.sort(this.elements);
+        fireContentsChanged(this, 0, this.elements.size());
+    }
+    
+    public void addElement(E toAdd) {
+        this.elements.add(toAdd);
+        fireContentsChanged(this, this.elements.size() - 1, this.elements.size());
+    }
+    
+    public void remove(int i) {
+        this.elements.remove(i);
+        fireContentsChanged(this, i, i);
+    }
+    
+    @Override
+    public int getSize() {
+        return this.elements.size();
+    }
+    
+    @Override 
+    public E getElementAt(int i) {
+        return this.elements.get(i);
+    }
 }
-
-    /*public static JList sortJList(JList list) {
-        ListModel model = list.getModel();
-        String[] strings = new String[model.getSize()];
-        for(int i=0;i<strings.length;i++){
-            strings[i]=model.getElementAt(i).toString();
-        }
-        Arrays.sort(strings);
-        list.setListData(strings);
-        return list;
-    }*/
-        

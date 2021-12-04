@@ -64,7 +64,9 @@ class Utils {
         song2.setSongID();
         artist1.addSong(song1);
         artist1.addSong(song2);
-        ((DefaultListModel)list.getModel()).addElement(artist1);
+        //((DefaultListModel)list.getModel()).addElement(artist1);
+        ((ModelWithSorting)list.getModel()).addElement(artist1);
+        
         Artist artist2 = new Artist();
         artist2.setLastName("Perry*");
         artist2.setFirstName("Katy");
@@ -80,7 +82,8 @@ class Utils {
         song4.setSongID();
         artist2.addSong(song3);
         artist2.addSong(song4);
-        ((DefaultListModel)list.getModel()).addElement(artist2);
+        //((DefaultListModel)list.getModel()).addElement(artist2);
+        ((ModelWithSorting)list.getModel()).addElement(artist2);
     }
     
     public static Connection connectToDatabase() {
@@ -124,7 +127,9 @@ class Utils {
                 artist.setLastName(surname);
                 artist.setPlaceOfBirth(pob);
                 artist.setDob(dob);
-                ((DefaultListModel)list.getModel()).addElement(artist);
+                
+                ((ModelWithSorting)list.getModel()).addElement(artist);
+                //((DefaultListModel)list.getModel()).addElement(artist);
                 String sql2 = "SELECT * FROM Song WHERE artistID = ?";
                 p2 = con.prepareStatement(sql2);
                 p2.setString(1, artistId1);

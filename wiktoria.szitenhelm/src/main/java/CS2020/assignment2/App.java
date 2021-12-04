@@ -10,7 +10,8 @@ import java.awt.event.*;
 import CS2020.assignment2.Utils;
 import CS2020.assignment2.Artist;
 import CS2020.assignment2.Song;
-//import CS2020.assignment2.ModelWithSorting;
+import CS2020.assignment2.ModelWithSorting;
+
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.sql.*;
@@ -55,13 +56,8 @@ public class App
         panel.add(addFromDB);
         panel.add(deleteS);   
         jList = new JList();
-        //SortableListModel sortableListModel = new SortableListModel(listModel);
-        //JList sortableList = new JList(sortableListModel);
-        jList.setModel(new DefaultListModel());
-        
-        //jList.setModel(new ModelWithSorting());
-        //ModelWithSorting implements ListModel
-            
+
+        jList.setModel(new ModelWithSorting());
             
         scrollerA = new JScrollPane(jList);
         scrollerA.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);    
@@ -125,6 +121,11 @@ public class App
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         frame.setSize(800, 600);
         frame.setVisible(true);
+        
+        frame.addMouseListener(new x());
+        textArea.addMouseListener(new x());
+        jList.addMouseListener(new x());
+        
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
           public void valueChanged(ListSelectionEvent listSelectionEvent) {
             boolean adjust = listSelectionEvent.getValueIsAdjusting();
@@ -170,7 +171,9 @@ public class App
                     int decision = JOptionPane.showConfirmDialog(frame, "Are you sure?");
                     if (decision == JOptionPane.YES_OPTION){
                         int selected = jList.getSelectedIndex();
-                        ((DefaultListModel)jList.getModel()).remove(selected);
+                        
+                        ((ModelWithSorting)jList.getModel()).remove(selected);
+                        
                         System.out.println("deleted ");
                         jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                         jList.setSelectedIndex(0);
@@ -190,18 +193,54 @@ public class App
                 
               }
               deleteS.addActionListener(new DeleteArtistListener()); 
-        
-       /*class DeleteArtistMouse implements MouseListener {
+    }
+
+    
+    class x extends MouseAdapter {
            @Override
            public void mouseClicked(MouseEvent e) {
                if (SwingUtilities.isRightMouseButton(e)) {
+
+                   System.out.println("click");
+                   int x = e.getX();
+                   int y = e.getY(); 
+                   JButton button = new JButton("Delete selected artist");
                    popupmenu = new JPopupMenu();
+                   popupmenu.add(button); 
+                   popupmenu.setVisible(true);
+                   popupmenu.show(frame, x, y); 
                    int selected = jList.getSelectedIndex();
-                   ((DefaultListModel)jList.getModel()).remove(selected);
+                   if (selected == -1){
+                        button.setEnabled(false); 
+                        System.out.println("disapbled");
+                   }
+                   else{
+                     System.out.println("can delete");
+                     button.addActionListener(new DeleteArtistListenerClick());
+                   }
                }
            }
-       }*/
     }
+       
+    
+    
+    class DeleteArtistListenerClick implements ActionListener {
+                @Override 
+                public void actionPerformed(ActionEvent e) {
+                    int selected = jList.getSelectedIndex();
+                    ((ModelWithSorting)jList.getModel()).remove(selected);
+                    System.out.println("deleted ");
+                    //jList.setSelectedIndex(-1);
+                    jList.clearSelection();
+                    fieldBow.setText("");
+                    fieldPob.setText("");
+                    fieldDob.setText("");
+                    textArea.setText("");
+                    popupmenu.setVisible(false);
+                    deleteS.setEnabled(false);
+                }
+
+     }
           
     class AddManuallyListener implements ActionListener {
         @Override
@@ -209,23 +248,20 @@ public class App
             Utils toCreate = new Utils();
             toCreate.createExampleArtists(jList);
             
-            //jList.getModel.sort();
-            //sortJList(jList);
+            ((ModelWithSorting)jList.getModel()).sort();
+
             
             addManually.setEnabled(false);
             System.out.println( "addActionListener worked!!!" );
             }
     }
-    
+        
     class AddFromDB implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             Utils toCreate = new Utils();
-            toCreate.readArtistAndSongsFromDatabase(jList);
-            
-            //jList.getModel.sort();
-            //sortJList(jList);
-            
+            toCreate.readArtistAndSongsFromDatabase(jList);   
+            ((ModelWithSorting)jList.getModel()).sort();
             addFromDB.setEnabled(false);
             System.out.println( "worked!!!" );
             }
@@ -239,4 +275,3 @@ public class App
         
     }
 }
-

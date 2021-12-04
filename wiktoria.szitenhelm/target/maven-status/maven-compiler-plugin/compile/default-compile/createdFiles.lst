@@ -1,8 +1,11 @@
 CS2020/assignment2/Utils.class
+CS2020/assignment2/App$x.class
 CS2020/assignment2/App$1.class
 CS2020/assignment2/App$AddFromDB.class
 CS2020/assignment2/Artist.class
 CS2020/assignment2/Song.class
 CS2020/assignment2/App$AddManuallyListener.class
+CS2020/assignment2/App$DeleteArtistListenerClick.class
 CS2020/assignment2/App.class
 CS2020/assignment2/App$1DeleteArtistListener.class
+CS2020/assignment2/ModelWithSorting.class
