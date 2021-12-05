@@ -11,20 +11,19 @@ import CS2020.assignment2.Utils;
 import CS2020.assignment2.Artist;
 import CS2020.assignment2.Song;
 import CS2020.assignment2.ModelWithSorting;
+import CS2020.assignment2.Export;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.UUID;
 
-/* 
- import com.opencsv.CSVWriter;
+/*import com.opencsv.CSVWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List;*/
 
-*/
 
 
 
@@ -83,7 +82,9 @@ public class App
         
         exportMenu = new JMenuItem("Export to CSV");
         
-        //exportMenu.addActionListener(new ExportData());
+        exportMenu.addActionListener(new ExportData());
+        
+        //exportMenu.addActionListener(new Export());
             
         menuBar.add(menu);
         menuBar.add(dataMenu);
@@ -274,11 +275,15 @@ public class App
         }
     }
     
-    /*class ExportData implements ActionListener {
-        @Override void actionPerformed(ActionEvent e) {
-            Export help = new Export();
+    class ExportData implements ActionListener {
+        @Override 
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("export works");
+            //exportToCSV();
+            Export export = new Export();
+            export.exportCSV(jList);
         }
-    }*/
+    }
     
     class DeleteArtistListenerClick implements ActionListener {
                 @Override 
@@ -322,7 +327,39 @@ public class App
             System.out.println( "worked!!!" );
             }
     }
+    
+   /*class ExportData implements ActionListener {
+        @Override 
+        public void actionPerformed(ActionEvent e){ 
+            System.out.println("export works");
+            toDo();
+        }  
+        public void toDo(){
+            List<String[]> listToExport = new ArrayList<>();
+            String[] header = {"Make", "Model", "Description", "Price"};
+            String[] record1 = {"Dell", "P3421W", "Dell 34, Curved, USB-C Monitor", "2499.00"};
+            listToExport.add(header);
+            listToExport.add(record1);
+            List<String[]> csvData = listToExport;
+            try (CSVWriter writer = new CSVWriter(new FileWriter("/home/codio/workspace/CS2020assignment2/resources/"))) {
+                writer.writeAll(csvData);
+            } 
+            catch (SQLException e)
+            {
+                System.err.println(e.getMessage());
+            }
+        }
+    }*/
+    
+    /*public void exportToCSV() {
         
+    }*/
+   
+    
+    
+    
+    
+   
     
     public static void main( String[] args )
     {
@@ -332,32 +369,3 @@ public class App
     }
 }
 
-/*trying to export 
-public static class Export {
-
-    public static void main(String[] args) throws IOException {
-
-        List<String[]> csvData = createCsvDataSimple();
-
-        // default all fields are enclosed in double quotes
-        // default separator is a comma
-        try (CSVWriter writer = new CSVWriter(new FileWriter("/home/codio/workspace/CS2020assignment2/resources/artisc.csv"))) {
-            writer.writeAll(csvData);
-        }
-
-    }
-
-    private static List<String[]> createCsvDataSimple() {
-        String[] header = {"id", "name", "address", "phone"};
-        String[] record1 = {"1", "first name", "address 1", "11111"};
-        String[] record2 = {"2", "second name", "address 2", "22222"};
-
-        List<String[]> list = new ArrayList<>();
-        list.add(header);
-        list.add(record1);
-        list.add(record2);
-
-        return list;
-    }
-
-} */
