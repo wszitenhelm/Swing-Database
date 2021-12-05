@@ -250,18 +250,22 @@ public class App
         @Override 
         public void actionPerformed(ActionEvent e) {
             if (jList.getModel().getSize() != 0) {
-            String[] currentData = new String[6];
+            
             //String[] currentData = Utils.getDetails(jList);
-            currentData[0] = "a";
+            ArrayList<String> currentData = Utils.getDetails(jList); 
+            Utils.getDetails(jList);  
+                
+            //String[] currentData = new String[6];
+            /*currentData[0] = "a";
             currentData[1] = "a";
             currentData[2] = "a";
-            currentData[3] = "a";
+            currentData[3] = "a";    
             currentData[4] = "a";
-            currentData[5] = "a";
-            String message = "Number of artists:" + currentData[0] + "\n" 
-                +"Number of songs: " + currentData[1] + "\n" + "Oldest artist: " + currentData[2] + "\n"
-                +"Youngest artist: " + currentData[3] + "\n" + "Shortest song names are: " + currentData[4] + "\n"
-                +"Longest song names are: " + currentData[5] + "\n";
+            currentData[5] = "a";*/
+            String message = "Number of artists:" + currentData.get(0) + "\n" 
+                +"Number of songs: " + currentData.get(1) + "\n" + "Oldest artist: " + currentData.get(2) + "\n"
+                +"Youngest artist: " + currentData.get(3) + "\n" + "Shortest song names are: " + currentData.get(4) + "\n"
+                +"Longest song names are: " + currentData.get(5) + "\n";
             JOptionPane.showMessageDialog(frame, message, "Data Statistics", JOptionPane.INFORMATION_MESSAGE);
             }
             else {

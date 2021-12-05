@@ -12,7 +12,12 @@ import javax.swing.DefaultListModel;
 import java.sql.*;
 import java.util.function.Consumer;
 
+//import java.util.Arrays;
+//import java.util.Comparator;
+import java.util.Collections;
+
 class Utils {
+    
     
 
     public static HashMap<UUID, String> returnSongDurationAndTitleFormatted(ArrayList<Song> listOfSongs) {
@@ -103,6 +108,93 @@ class Utils {
         }
         return conn;
      }
+    
+    
+    public static ArrayList<String> getDetails(JList<Artist> list){
+        ArrayList<String> result = new ArrayList<String>();
+        ModelWithSorting<Artist> artists = ((ModelWithSorting)list.getModel());
+        int numberOfA = artists.getSize();
+        int numberOfSongs = 0;
+    
+        ArrayList<String> allsongs = new ArrayList<String>();
+        for (int i=0; i<numberOfA; i++) {
+            ArrayList<Song> songs = artists.getElementAt(i).getSongs();
+            int numberofS = songs.size();
+            numberOfSongs += numberofS;
+            for (int y =0; y<numberofS; y++) {
+                String song = songs.get(y).getTitle();
+                allsongs.add(song);
+            }
+        }
+        allsongs.sort((s1, s2) -> Math.abs(s1.length() - "a".length()) - Math.abs(s2.length() - "a".length()));
+        System.out.println(allsongs);
+        ArrayList<String> shortestSongs = new ArrayList<String>();
+        ArrayList<String> longestSongs = new ArrayList<String>();
+        int i = 1;
+        shortestSongs.add(allsongs.get(0));
+        longestSongs.add(allsongs.get(allsongs.size()-1));
+        while (i < numberOfSongs) {
+            if (allsongs.get(i).length() == allsongs.get(0).length()) {
+                shortestSongs.add(allsongs.get(i));
+                i += 1;
+            }
+            else {
+                break;
+            }
+        }
+        
+        int y = (allsongs.size() - 2);
+        while (i < numberOfSongs) {
+            if (allsongs.get(allsongs.size()-1).length() == allsongs.get(y).length()) {
+                longestSongs.add(allsongs.get(y));
+                y -= 1;
+            }
+            else {
+                break;
+            }
+        }        
+        System.out.println(shortestSongs);
+        System.out.println(longestSongs);
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
+        HashMap<LocalDate, String> datesAndArtists = new HashMap<>();
+        ArrayList<LocalDate> allDates = new ArrayList<LocalDate>();
+        for (int x=0; x<numberOfA; x++) {
+            String dateOfB = artists.getElementAt(x).getDob();
+            String FnameOfA = artists.getElementAt(x).getFirstName();
+            String LnameOfA = artists.getElementAt(x).getLastName();
+            String name = FnameOfA + " " + LnameOfA;
+            LocalDate artistDob = LocalDate.parse(dateOfB, formatter);
+            allDates.add(artistDob);
+            datesAndArtists.put(artistDob, name);
+        }
+        Collections.sort(allDates);
+        
+        LocalDate oldest = allDates.get(0);
+        LocalDate youngest = allDates.get(allDates.size()-1);
+        System.out.println(youngest); 
+        System.out.println(oldest);
+        System.out.println(allDates);
+        String youngestArtist = datesAndArtists.get(youngest);
+        String oldestArtist = datesAndArtists.get(oldest);
+        System.out.println(youngestArtist);
+        
+        
+        Object[] logestSongArr = longestSongs.toArray(); 
+        Object[] shortestSongArr = shortestSongs.toArray(); 
+        
+        String longestSongString = "[" + String.join(", ", longestSongs) + "]";
+        String shortestSongString = "[" + String.join(", ", shortestSongs) + "]";
+
+        result.add(String.valueOf(numberOfA));
+        result.add(String.valueOf(numberOfSongs));
+        result.add(oldestArtist);
+        result.add(youngestArtist); 
+        result.add(shortestSongString);
+        result.add(longestSongString);
+    return result;     
+    }
+
     
     
     public static void readArtistAndSongsFromDatabase(JList<Artist> list) {
