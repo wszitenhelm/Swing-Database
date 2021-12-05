@@ -85,6 +85,11 @@ class Utils {
         //((DefaultListModel)list.getModel()).addElement(artist2);
         ((ModelWithSorting)list.getModel()).addElement(artist2);
     }
+
+
+    
+    
+    
     
     public static Connection connectToDatabase() {
         Connection conn = null;

@@ -11,12 +11,22 @@ import CS2020.assignment2.Utils;
 import CS2020.assignment2.Artist;
 import CS2020.assignment2.Song;
 import CS2020.assignment2.ModelWithSorting;
-
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.UUID;
+
+/* 
+ import com.opencsv.CSVWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+*/
+
+
 
 public class App
 {   
@@ -28,7 +38,9 @@ public class App
     public JList<Artist> jList;
     public JScrollPane scrollerA;
     public JMenuBar menuBar;
-    public JMenuItem menu;
+    public JMenuItem menu;    
+    public JMenuItem dataMenu;
+    public JMenuItem exportMenu;
     public GridBagLayout layoutEast;
     public GridBagConstraints c;
     public JPanel panelEast;
@@ -64,7 +76,18 @@ public class App
         menuBar = new JMenuBar();
         menu = new JMenuItem("About");
         menu.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Assignment", "pop up info", JOptionPane.INFORMATION_MESSAGE));
+        dataMenu = new JMenuItem("Data");
+       
+        
+        dataMenu.addActionListener(new DataListener());
+        
+        exportMenu = new JMenuItem("Export to CSV");
+        
+        //exportMenu.addActionListener(new ExportData());
+            
         menuBar.add(menu);
+        menuBar.add(dataMenu);
+        menuBar.add(exportMenu);
         layoutEast = new GridBagLayout();
         c = new GridBagConstraints();
         panelEast = new JPanel();
@@ -199,7 +222,7 @@ public class App
     class x extends MouseAdapter {
            @Override
            public void mouseClicked(MouseEvent e) {
-               if (SwingUtilities.isRightMouseButton(e)) {
+               //if (SwingUtilities.isRightMouseButton(e)) {
 
                    System.out.println("click");
                    int x = e.getX();
@@ -218,11 +241,40 @@ public class App
                      System.out.println("can delete");
                      button.addActionListener(new DeleteArtistListenerClick());
                    }
-               }
+               //}
            }
     }
        
     
+    class DataListener implements ActionListener {
+        @Override 
+        public void actionPerformed(ActionEvent e) {
+            if (jList.getModel().getSize() != 0) {
+            String[] currentData = new String[6];
+            //String[] currentData = Utils.getDetails(jList);
+            currentData[0] = "a";
+            currentData[1] = "a";
+            currentData[2] = "a";
+            currentData[3] = "a";
+            currentData[4] = "a";
+            currentData[5] = "a";
+            String message = "Number of artists:" + currentData[0] + "\n" 
+                +"Number of songs: " + currentData[1] + "\n" + "Oldest artist: " + currentData[2] + "\n"
+                +"Youngest artist: " + currentData[3] + "\n" + "Shortest song names are: " + currentData[4] + "\n"
+                +"Longest song names are: " + currentData[5] + "\n";
+            JOptionPane.showMessageDialog(frame, message, "Data Statistics", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else {
+                    JOptionPane.showMessageDialog(frame, "The list is empty", "Data Statistics", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }
+    
+    /*class ExportData implements ActionListener {
+        @Override void actionPerformed(ActionEvent e) {
+            Export help = new Export();
+        }
+    }*/
     
     class DeleteArtistListenerClick implements ActionListener {
                 @Override 
@@ -275,3 +327,33 @@ public class App
         
     }
 }
+
+/*trying to export 
+public static class Export {
+
+    public static void main(String[] args) throws IOException {
+
+        List<String[]> csvData = createCsvDataSimple();
+
+        // default all fields are enclosed in double quotes
+        // default separator is a comma
+        try (CSVWriter writer = new CSVWriter(new FileWriter("/home/codio/workspace/CS2020assignment2/resources/artisc.csv"))) {
+            writer.writeAll(csvData);
+        }
+
+    }
+
+    private static List<String[]> createCsvDataSimple() {
+        String[] header = {"id", "name", "address", "phone"};
+        String[] record1 = {"1", "first name", "address 1", "11111"};
+        String[] record2 = {"2", "second name", "address 2", "22222"};
+
+        List<String[]> list = new ArrayList<>();
+        list.add(header);
+        list.add(record1);
+        list.add(record2);
+
+        return list;
+    }
+
+} */
