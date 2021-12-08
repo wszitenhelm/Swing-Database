@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.UUID;
+import java.awt.Color;
 
 /**
  * Class for running the whole Swing Music application.
@@ -48,6 +49,7 @@ public class App
     public JTextArea textArea;
     public JScrollPane scrollerS;
     public JPopupMenu popupmenu;
+    public JPanel panelE; 
 
     /**
      * Class constructor that creates JFrame 
@@ -80,11 +82,12 @@ public class App
         exportMenu.addActionListener(new ExportData());        
         menuBar.add(menu);
         menuBar.add(dataMenu);
-        menuBar.add(exportMenu);
+        menuBar.add(exportMenu);      
+        panelE = new JPanel(new BorderLayout());        
         layoutEast = new GridBagLayout();
         c = new GridBagConstraints();
         panelEast = new JPanel();
-        panelEast.setLayout(layoutEast);
+        panelEast.setLayout(layoutEast);        
         labelDob = new JLabel("Date of Birth:");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
@@ -120,19 +123,20 @@ public class App
         c.gridy = 2;
         panelEast.add(fieldBow, c);
         textArea = new JTextArea();
+        textArea.setForeground(Color.BLACK);
+        textArea.setColumns(15);        
+        //textArea.setSelectedTextColor(null);
+        //textArea.setForeground(Color.BLACK);
+        textArea.setLineWrap(true);
         textArea.setEditable(false);
-        scrollerS = new JScrollPane(textArea);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridwidth = 2;
-        c.ipady = 400;
-        c.ipadx = 200;
-        c.gridx = 0;
-        c.gridy = 3;
-        panelEast.add(scrollerS, c);
-        scrollerS.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS); 
+        textArea.setEnabled(false);        
+        scrollerS = new JScrollPane(textArea);        
+        panelE.add(panelEast, BorderLayout.NORTH);
+        panelE.add(scrollerS, BorderLayout.CENTER);           
+        scrollerS.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);                    
         frame.getContentPane().add(BorderLayout.NORTH, menuBar);
         frame.getContentPane().add(BorderLayout.CENTER, scrollerA);
-        frame.getContentPane().add(BorderLayout.EAST, panelEast);
+        frame.getContentPane().add(BorderLayout.EAST, panelE);                
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         frame.setSize(800, 600);
         frame.setVisible(true);        
