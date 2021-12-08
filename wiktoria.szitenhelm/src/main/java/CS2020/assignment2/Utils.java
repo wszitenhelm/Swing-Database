@@ -11,18 +11,25 @@ import java.util.UUID;
 import javax.swing.DefaultListModel;
 import java.sql.*;
 import java.util.function.Consumer;
-
-//import java.util.Arrays;
-//import java.util.Comparator;
 import java.util.Collections;
 
+/**
+ * Class generally for operating with Artists and Songs 
+ * in the aspect of creating example artists, 
+ * reading database to access artists 
+ * and getting details about created/read from database artists.
+ */
 class Utils {
-    
-    
 
+    /**
+     * Method for returning songs' durations and titles
+     * as HashMap named songs which is created inside this method. 
+     * Method created with lambda expression. 
+     * @param listOfSongs
+     * @return songs
+     */
     public static HashMap<UUID, String> returnSongDurationAndTitleFormatted(ArrayList<Song> listOfSongs) {
-        HashMap<UUID, String> songs = new HashMap<>();
-        
+        HashMap<UUID, String> songs = new HashMap<>();        
         listOfSongs.forEach( (s) -> {UUID songID = s.getSongID();                    
                 String songTitle = s.getTitle();
                 int songDuration = s.getDuration();
@@ -36,14 +43,17 @@ class Utils {
          return songs;     
     }
 
-    
+    /**
+     * Method for checking if Artist was born on weekend.
+     * It uses formatter to format date, gets day as day of week
+     * and then checks if that day was weekend.
+     * @param dob
+     * return true/false
+     */
     public static boolean checkIfBornOnWeekend(String dob){
-        //return true if artis was born on the weekend, false otherwise 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
         LocalDate day = LocalDate.parse(dob, formatter); 
-        //String weekday = day.getDayOfWeek().toString(); 
         String weekday = day.getDayOfWeek().name();
-        //check if weekend
         if (weekday.equals("SATURDAY") || weekday.equals("SUNDAY")){
             return true;
         }
@@ -51,9 +61,14 @@ class Utils {
             return false; 
         }
     }
-    
+ 
+    /**
+     * Method for creating example artists 
+     * with all the needed fields. Method also creates songs 
+     * and adds them as artists' fields. 
+     * @param ist
+     */
     public static void createExampleArtists(JList<Artist> list) {
-        //list.setModel(new DefaultListModel());
         Artist artist1 = new Artist();
         artist1.setLastName("Blunt*");
         artist1.setFirstName("James");
@@ -69,9 +84,7 @@ class Utils {
         song2.setSongID();
         artist1.addSong(song1);
         artist1.addSong(song2);
-        //((DefaultListModel)list.getModel()).addElement(artist1);
-        ((ModelWithSorting)list.getModel()).addElement(artist1);
-        
+        ((ModelWithSorting)list.getModel()).addElement(artist1);        
         Artist artist2 = new Artist();
         artist2.setLastName("Perry*");
         artist2.setFirstName("Katy");
@@ -87,15 +100,13 @@ class Utils {
         song4.setSongID();
         artist2.addSong(song3);
         artist2.addSong(song4);
-        //((DefaultListModel)list.getModel()).addElement(artist2);
         ((ModelWithSorting)list.getModel()).addElement(artist2);
     }
-
-
     
-    
-    
-    
+    /**
+     * Method for creating connection to database. 
+     * @return conn
+     */ 
     public static Connection connectToDatabase() {
         Connection conn = null;
         try {
@@ -107,15 +118,20 @@ class Utils {
           System.err.println(e.getMessage());
         }
         return conn;
-     }
-    
-    
+     }   
+
+    /**
+     * Method for getting all the details about artists from the list.
+     * Creates ArrayList<String> called result that contains 
+     * all the artists and their fields. 
+     * @param list
+     * return result
+     */
     public static ArrayList<String> getDetails(JList<Artist> list){
         ArrayList<String> result = new ArrayList<String>();
         ModelWithSorting<Artist> artists = ((ModelWithSorting)list.getModel());
         int numberOfA = artists.getSize();
-        int numberOfSongs = 0;
-    
+        int numberOfSongs = 0;    
         ArrayList<String> allsongs = new ArrayList<String>();
         for (int i=0; i<numberOfA; i++) {
             ArrayList<Song> songs = artists.getElementAt(i).getSongs();
@@ -141,8 +157,7 @@ class Utils {
             else {
                 break;
             }
-        }
-        
+        }        
         int y = (allsongs.size() - 2);
         while (i < numberOfSongs) {
             if (allsongs.get(allsongs.size()-1).length() == allsongs.get(y).length()) {
@@ -154,8 +169,7 @@ class Utils {
             }
         }        
         System.out.println(shortestSongs);
-        System.out.println(longestSongs);
-        
+        System.out.println(longestSongs);        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
         HashMap<LocalDate, String> datesAndArtists = new HashMap<>();
         ArrayList<LocalDate> allDates = new ArrayList<LocalDate>();
@@ -168,8 +182,7 @@ class Utils {
             allDates.add(artistDob);
             datesAndArtists.put(artistDob, name);
         }
-        Collections.sort(allDates);
-        
+        Collections.sort(allDates);        
         LocalDate oldest = allDates.get(0);
         LocalDate youngest = allDates.get(allDates.size()-1);
         System.out.println(youngest); 
@@ -177,15 +190,11 @@ class Utils {
         System.out.println(allDates);
         String youngestArtist = datesAndArtists.get(youngest);
         String oldestArtist = datesAndArtists.get(oldest);
-        System.out.println(youngestArtist);
-        
-        
+        System.out.println(youngestArtist);                
         Object[] logestSongArr = longestSongs.toArray(); 
-        Object[] shortestSongArr = shortestSongs.toArray(); 
-        
+        Object[] shortestSongArr = shortestSongs.toArray();         
         String longestSongString = "[" + String.join(", ", longestSongs) + "]";
         String shortestSongString = "[" + String.join(", ", shortestSongs) + "]";
-
         result.add(String.valueOf(numberOfA));
         result.add(String.valueOf(numberOfSongs));
         result.add(oldestArtist);
@@ -195,8 +204,12 @@ class Utils {
     return result;     
     }
 
-    
-    
+    /**
+     * Method for reading database to get artists and their
+     * songs in order to add them to the list. 
+     * Method works by executing two queries. 
+     * @param list
+     */
     public static void readArtistAndSongsFromDatabase(JList<Artist> list) {
         Connection con=null;
         PreparedStatement p1=null;
@@ -217,31 +230,30 @@ class Utils {
                 String name = splittedName[0];
                 int length = splittedName.length;
                 String surname = splittedName[length-1];
+                if (length == 1) {
+                    surname = "";
+                }
                 Artist artist = new Artist();
                 UUID uuidA = UUID.fromString(artistId1);
                 artist.setArtistID(uuidA);
                 artist.setFirstName(name);
                 artist.setLastName(surname);
                 artist.setPlaceOfBirth(pob);
-                artist.setDob(dob);
-                
+                artist.setDob(dob);                
                 ((ModelWithSorting)list.getModel()).addElement(artist);
-                //((DefaultListModel)list.getModel()).addElement(artist);
                 String sql2 = "SELECT * FROM Song WHERE artistID = ?";
                 p2 = con.prepareStatement(sql2);
                 p2.setString(1, artistId1);
                 rs2 = p2.executeQuery();
                 while (rs2.next()) {
-                        //String songId = rs2.getString("songID").trim();
-                        String title = rs2.getString("title");
-                        int duration = rs2.getInt("duration");
-                        title = title.trim();
-                        Song song = new Song();
-                        //UUID uuidS = UUID.fromString(songId);
-                        song.setSongID();
-                        song.setTitle(title);
-                        song.setDuration(duration);
-                        artist.addSong(song);
+                    String title = rs2.getString("title");
+                    int duration = rs2.getInt("duration");
+                    title = title.trim();
+                    Song song = new Song();                    
+                    song.setSongID();
+                    song.setTitle(title);
+                    song.setDuration(duration);
+                    artist.addSong(song);
                 }
             }
         con.close();

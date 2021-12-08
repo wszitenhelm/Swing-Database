@@ -1,8 +1,8 @@
 CS2020/assignment2/Utils.class
-CS2020/assignment2/App$x.class
 CS2020/assignment2/App$AddFromDB.class
 CS2020/assignment2/Song.class
 CS2020/assignment2/App$AddManuallyListener.class
+CS2020/assignment2/App$RightMouseListener.class
 CS2020/assignment2/App$DeleteArtistListenerClick.class
 CS2020/assignment2/App$ExportData.class
 CS2020/assignment2/App.class

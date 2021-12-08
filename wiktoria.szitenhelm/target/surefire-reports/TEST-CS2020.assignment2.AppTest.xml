@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="CS2020.assignment2.AppTest" time="0.046" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="CS2020.assignment2.AppTest" time="0.055" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="java.specification.version" value="11"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/zulu-11-amd64/lib"/>
-    <property name="sun.java.command" value="/home/codio/workspace/CS2020assignment2/wiktoria.szitenhelm/target/surefire/surefirebooter1633980397850586688.jar /home/codio/workspace/CS2020assignment2/wiktoria.szitenhelm/target/surefire 2021-12-05T16-17-31_118-jvmRun1 surefire5005913008801000099tmp surefire_017380803332362285932tmp"/>
+    <property name="sun.java.command" value="/home/codio/workspace/CS2020assignment2/wiktoria.szitenhelm/target/surefire/surefirebooter16018386410270478530.jar /home/codio/workspace/CS2020assignment2/wiktoria.szitenhelm/target/surefire 2021-12-08T10-10-38_505-jvmRun1 surefire16991273965968807398tmp surefire_07517897092439287137tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/codio/workspace/CS2020assignment2/wiktoria.szitenhelm/target/test-classes:/home/codio/workspace/CS2020assignment2/wiktoria.szitenhelm/target/classes:/home/codio/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/codio/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/codio/.m2/repository/org/xerial/sqlite-jdbc/3.15.1/sqlite-jdbc-3.15.1.jar:/home/codio/.m2/repository/com/opencsv/opencsv/5.4/opencsv-5.4.jar:/home/codio/.m2/repository/org/apache/commons/commons-lang3/3.11/commons-lang3-3.11.jar:/home/codio/.m2/repository/org/apache/commons/commons-text/1.9/commons-text-1.9.jar:/home/codio/.m2/repository/commons-beanutils/commons-beanutils/1.9.4/commons-beanutils-1.9.4.jar:/home/codio/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar:/home/codio/.m2/repository/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar:/home/codio/.m2/repository/org/apache/commons/commons-collections4/4.4/commons-collections4-4.4.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -32,7 +32,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="jdk.vendor.version" value="Zulu11.41+23-CA"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/home/codio/workspace/CS2020assignment2/wiktoria.szitenhelm/target/surefire/surefirebooter1633980397850586688.jar"/>
+    <property name="surefire.real.class.path" value="/home/codio/workspace/CS2020assignment2/wiktoria.szitenhelm/target/surefire/surefirebooter16018386410270478530.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="11.0.8+10-LTS"/>
     <property name="user.name" value="codio"/>
@@ -58,5 +58,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="CS2020.assignment2.AppTest" time="0.042"/>
+  <testcase name="shouldAnswerWithTrue" classname="CS2020.assignment2.AppTest" time="0.027"/>
 </testsuite>

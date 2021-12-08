@@ -12,37 +12,39 @@ import CS2020.assignment2.Artist;
 import CS2020.assignment2.Song;
 import CS2020.assignment2.ModelWithSorting;
 
+/**
+ * This class was created for getting objects from JList,
+ * getting their values and creating csv files
+ * with those values.
+ */
 public class Export {
     
     public FileWriter writer;
     public FileWriter writerSongs;
     
-    public Export() {
-        System.out.println("works till here");
-    }
-    
+    /**
+     * Method for getting objects and their fields
+     * from jList using ModelWithSorting and double for loop. 
+     * Method creates two files artists.csv and songs.csv 
+     * in a folder resources.    
+     * @param jList
+     */
     public static void exportCSV(JList<Artist> jList) {
-        System.out.println("got here");
-        
         ModelWithSorting<Artist> artists = ((ModelWithSorting)jList.getModel());
-        int numberOfA = artists.getSize();
-        
+        int numberOfA = artists.getSize();        
         List<String[]> listA = new ArrayList<>();
         String[] headerA = {"artistID", "dob", "placeOfBirth"};
-        listA.add(headerA);
-        
+        listA.add(headerA);        
         List<String[]> listS = new ArrayList<>();
         String[] headerS = {"songID", "artistID", "title", "duration"};
-        listS.add(headerS);        
-        
+        listS.add(headerS);                
         for (int i=0; i<numberOfA; i++){
             UUID artistId = artists.getElementAt(i).getArtistID();
             String artistID = artistId.toString();
             String[] artistElements = {artistID, artists.getElementAt(i).getDob(), artists.getElementAt(i).getPlaceOfBirth()};
             listA.add(artistElements);
             ArrayList<Song> songs = artists.getElementAt(i).getSongs();
-            int numberofS = songs.size();
-  
+            int numberofS = songs.size();  
             for (int k=0; k<numberofS; k++){
                 UUID songId = songs.get(k).getSongID();
                 String songID = songId.toString();
@@ -51,14 +53,9 @@ public class Export {
                 String durationS = String.valueOf(duration);
                 String[] songElements = {songID, artistID, title, durationS};
                 listS.add(songElements);
-            }
-            
-        }
-        
-        
-    	//FileWriter writer = null;
+            }            
+        }               
     	try {
-            //FileWriter writer;
             CSVWriter writer = new CSVWriter(new FileWriter("/home/codio/workspace/CS2020assignment2/resources/artists.csv"));
             CSVWriter writerSongs = new CSVWriter(new FileWriter("/home/codio/workspace/CS2020assignment2/resources/songs.csv"));
             writer.writeAll(listA);
@@ -71,17 +68,5 @@ public class Export {
     	{
     		ee.printStackTrace();
     	}
-    	//finally
-    	/*{
-    		try
-    		{
-    			writer.close();
-    		}
-    		catch(IOException ie)
-    		{
-    			System.out.println("Error occured while closing the fileWriter");
-    			ie.printStackTrace();
-    		}
-    	}*/
     }
 }

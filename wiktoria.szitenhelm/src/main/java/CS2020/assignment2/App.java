@@ -18,15 +18,11 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.UUID;
 
-/*import com.opencsv.CSVWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;*/
-
-
-
-
+/**
+ * Class for running the whole Swing Music application.
+ * Firsly class creates JPanel with all the JComponents 
+ * that have ActionListeners to make app work. 
+ */
 public class App
 {   
     public JPanel panel;   
@@ -37,9 +33,9 @@ public class App
     public JList<Artist> jList;
     public JScrollPane scrollerA;
     public JMenuBar menuBar;
-    public JMenuItem menu;    
-    public JMenuItem dataMenu;
-    public JMenuItem exportMenu;
+    public JButton menu;    
+    public JButton dataMenu;
+    public JButton exportMenu;
     public GridBagLayout layoutEast;
     public GridBagConstraints c;
     public JPanel panelEast;
@@ -52,14 +48,19 @@ public class App
     public JTextArea textArea;
     public JScrollPane scrollerS;
     public JPopupMenu popupmenu;
-    
+
+    /**
+     * Class constructor that creates JFrame 
+     * and other components to make
+     * an user friendly GUI.
+     */
     App() {
         frame = new JFrame("Wiktoria Szitenhelm: Assignment 2");
         panel = new JPanel();
         panel.setBackground(Color.darkGray);
         addManually = new JButton("Add Data Manually");
         addManually.addActionListener(new AddManuallyListener());     
-        addFromDB = new JButton("Add Data Fron Database");
+        addFromDB = new JButton("Add Data From Database");
         addFromDB.addActionListener(new AddFromDB());
         deleteS = new JButton("Delete Selected");
         deleteS.setEnabled(false);
@@ -67,25 +68,16 @@ public class App
         panel.add(addFromDB);
         panel.add(deleteS);   
         jList = new JList();
-
-        jList.setModel(new ModelWithSorting());
-            
+        jList.setModel(new ModelWithSorting());           
         scrollerA = new JScrollPane(jList);
         scrollerA.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);    
         menuBar = new JMenuBar();
-        menu = new JMenuItem("About");
-        menu.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Assignment", "pop up info", JOptionPane.INFORMATION_MESSAGE));
-        dataMenu = new JMenuItem("Data");
-       
-        
-        dataMenu.addActionListener(new DataListener());
-        
-        exportMenu = new JMenuItem("Export to CSV");
-        
-        exportMenu.addActionListener(new ExportData());
-        
-        //exportMenu.addActionListener(new Export());
-            
+        menu = new JButton("About");
+        menu.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Assignment 2 App v.0.1", "About", JOptionPane.INFORMATION_MESSAGE));
+        dataMenu = new JButton("Data");               
+        dataMenu.addActionListener(new DataListener());        
+        exportMenu = new JButton("Export to CSV");       
+        exportMenu.addActionListener(new ExportData());        
         menuBar.add(menu);
         menuBar.add(dataMenu);
         menuBar.add(exportMenu);
@@ -127,7 +119,6 @@ public class App
         c.gridx = 1;
         c.gridy = 2;
         panelEast.add(fieldBow, c);
-        // ?
         textArea = new JTextArea();
         textArea.setEditable(false);
         scrollerS = new JScrollPane(textArea);
@@ -144,39 +135,32 @@ public class App
         frame.getContentPane().add(BorderLayout.EAST, panelEast);
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         frame.setSize(800, 600);
-        frame.setVisible(true);
-        
-        frame.addMouseListener(new x());
-        textArea.addMouseListener(new x());
-        jList.addMouseListener(new x());
-        
+        frame.setVisible(true);        
+        frame.addMouseListener(new RightMouseListener());
+        textArea.addMouseListener(new RightMouseListener());
+        jList.addMouseListener(new RightMouseListener());        
         ListSelectionListener listSelectionListener = new ListSelectionListener() {
           public void valueChanged(ListSelectionEvent listSelectionEvent) {
             boolean adjust = listSelectionEvent.getValueIsAdjusting();
             if (!adjust) {
               JList list = (JList) listSelectionEvent.getSource();
               int selections[] = list.getSelectedIndices();
-             if (selections.length > 0) {
+            if (selections.length > 0) {
               deleteS.setEnabled(true);      
-                
               Object selectionValues[] = list.getSelectedValues();
               String dob = ((Artist)selectionValues[0]).getDob();
               fieldDob.setText(dob);
               String pob = ((Artist)selectionValues[0]).getPlaceOfBirth();
               fieldPob.setText(pob);
-              //static !!!! no need to create Utilis u = new Utilis();
               boolean result = Utils.checkIfBornOnWeekend(dob);
               if (result == true) {
                   fieldBow.setText("yes");
               }
               else {
                   fieldBow.setText("no");
-              }
-                 
-             
+              }                              
               ArrayList<Song> listOfSongs = ((Artist)selectionValues[0]).getSongs();
               HashMap<UUID, String> songs = Utils.returnSongDurationAndTitleFormatted(listOfSongs);
-              System.out.println(listOfSongs);
               textArea.setText("");
               int a = 1;
               for (String song: songs.values()) {
@@ -188,17 +172,24 @@ public class App
           }
           };
         jList.addListSelectionListener(listSelectionListener);
-        
+
+        /**
+         * Class for deleting artist from the scrollable list.
+         * This class implements ActionListener. 
+         */
         class DeleteArtistListener implements ActionListener {
                 @Override 
+                /**
+                 * Method for perfoming action when event happens. 
+                 * This method remove artist from the list 
+                 * and set empty text for text fields. 
+                 * @param e
+                 */
                 public void actionPerformed(ActionEvent e) {
                     int decision = JOptionPane.showConfirmDialog(frame, "Are you sure?");
                     if (decision == JOptionPane.YES_OPTION){
-                        int selected = jList.getSelectedIndex();
-                        
-                        ((ModelWithSorting)jList.getModel()).remove(selected);
-                        
-                        System.out.println("deleted ");
+                        int selected = jList.getSelectedIndex();                        
+                        ((ModelWithSorting)jList.getModel()).remove(selected);                        
                         jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                         jList.setSelectedIndex(0);
                     }
@@ -211,21 +202,27 @@ public class App
                         fieldPob.setText("");
                         fieldDob.setText("");
                         textArea.setText("");
-                        System.out.println("sieze ok");
                     }
-                }
-                
+                }                
               }
               deleteS.addActionListener(new DeleteArtistListener()); 
     }
-
     
-    class x extends MouseAdapter {
+    /**
+     * Class for listening for right mouse clicking.
+     * This class extends MouseAdapter.
+     */
+    class RightMouseListener extends MouseAdapter {
+            /**
+             * Method for perfoming action when event happens.
+             * This method overrides method mouseClicked(). 
+             * It lets by adding ActionListener to the created button,
+             * delete the artist if it was a right mouse click and if artist is selected.
+             * @param e
+             */
            @Override
            public void mouseClicked(MouseEvent e) {
-               //if (SwingUtilities.isRightMouseButton(e)) {
-
-                   System.out.println("click");
+                if (SwingUtilities.isRightMouseButton(e)) {
                    int x = e.getX();
                    int y = e.getY(); 
                    JButton button = new JButton("Delete selected artist");
@@ -236,33 +233,31 @@ public class App
                    int selected = jList.getSelectedIndex();
                    if (selected == -1){
                         button.setEnabled(false); 
-                        System.out.println("disapbled");
                    }
                    else{
-                     System.out.println("can delete");
                      button.addActionListener(new DeleteArtistListenerClick());
                    }
-               //}
+                }
            }
     }
-       
-    
+           
+   /**
+    * Class for showing current data information 
+    * after clicking button "Data".
+    * Class implements ActionListener.
+    */
     class DataListener implements ActionListener {
+        /**
+         * Method for performing action when event happens.
+         * This method overrides method actionPerformed().
+         * Method gets details from jList and then display them.
+         * @param e
+         */
         @Override 
         public void actionPerformed(ActionEvent e) {
-            if (jList.getModel().getSize() != 0) {
-            
-            //String[] currentData = Utils.getDetails(jList);
+            if (jList.getModel().getSize() != 0) {          
             ArrayList<String> currentData = Utils.getDetails(jList); 
             Utils.getDetails(jList);  
-                
-            //String[] currentData = new String[6];
-            /*currentData[0] = "a";
-            currentData[1] = "a";
-            currentData[2] = "a";
-            currentData[3] = "a";    
-            currentData[4] = "a";
-            currentData[5] = "a";*/
             String message = "Number of artists:" + currentData.get(0) + "\n" 
                 +"Number of songs: " + currentData.get(1) + "\n" + "Oldest artist: " + currentData.get(2) + "\n"
                 +"Youngest artist: " + currentData.get(3) + "\n" + "Shortest song names are: " + currentData.get(4) + "\n"
@@ -275,23 +270,41 @@ public class App
         }
     }
     
+    /**
+     * Class for calling method that is responsible 
+     * for exporting data and creating csv files. 
+     */
     class ExportData implements ActionListener {
+        /**
+         * Method for performing action when event happens.
+         * Overrides method actionPerformed().
+         * Creates new Export object and calls method 
+         * to export data and create csv fils.
+         * @param e
+         */
         @Override 
         public void actionPerformed(ActionEvent e) {
             System.out.println("export works");
-            //exportToCSV();
             Export export = new Export();
             export.exportCSV(jList);
         }
     }
-    
+
+    /**
+     * Class for letting user delete the artist by right mouse clicking.
+     * This class implements ActionListener.
+     */
     class DeleteArtistListenerClick implements ActionListener {
+                /** 
+                 * Method for perfoming action when event happens.
+                 * This method overrides method actionPerformed().
+                 * It removes selected artist and set empty text fields.
+                 * @param e 
+                 */
                 @Override 
                 public void actionPerformed(ActionEvent e) {
                     int selected = jList.getSelectedIndex();
                     ((ModelWithSorting)jList.getModel()).remove(selected);
-                    System.out.println("deleted ");
-                    //jList.setSelectedIndex(-1);
                     jList.clearSelection();
                     fieldBow.setText("");
                     fieldPob.setText("");
@@ -300,72 +313,58 @@ public class App
                     popupmenu.setVisible(false);
                     deleteS.setEnabled(false);
                 }
-
      }
-          
+     
+    /**
+     * Class that implements ActionListener 
+     * to add manually created artists 
+     * to the scrollable JList.
+     */
     class AddManuallyListener implements ActionListener {
+        /**
+         * Method that performs action when event happens.
+         * Overrides method actionPerformed.
+         * Creates new Utils object and calls method
+         * responsible for creating example artists.
+         * @param e 
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             Utils toCreate = new Utils();
-            toCreate.createExampleArtists(jList);
-            
+            toCreate.createExampleArtists(jList);            
             ((ModelWithSorting)jList.getModel()).sort();
-
-            
             addManually.setEnabled(false);
-            System.out.println( "addActionListener worked!!!" );
             }
     }
-        
+     
+    /**
+     * Class for adding artists from database.
+     * This class implements ActionListener.
+     */
     class AddFromDB implements ActionListener {
+        /**
+         * Method for performing action when event happens.
+         * Overrides method actionPerformed().
+         * Creates new Utils object and calls method
+         * responsible for reading artists from database.
+         * @param e 
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             Utils toCreate = new Utils();
             toCreate.readArtistAndSongsFromDatabase(jList);   
             ((ModelWithSorting)jList.getModel()).sort();
             addFromDB.setEnabled(false);
-            System.out.println( "worked!!!" );
             }
     }
-    
-   /*class ExportData implements ActionListener {
-        @Override 
-        public void actionPerformed(ActionEvent e){ 
-            System.out.println("export works");
-            toDo();
-        }  
-        public void toDo(){
-            List<String[]> listToExport = new ArrayList<>();
-            String[] header = {"Make", "Model", "Description", "Price"};
-            String[] record1 = {"Dell", "P3421W", "Dell 34, Curved, USB-C Monitor", "2499.00"};
-            listToExport.add(header);
-            listToExport.add(record1);
-            List<String[]> csvData = listToExport;
-            try (CSVWriter writer = new CSVWriter(new FileWriter("/home/codio/workspace/CS2020assignment2/resources/"))) {
-                writer.writeAll(csvData);
-            } 
-            catch (SQLException e)
-            {
-                System.err.println(e.getMessage());
-            }
-        }
-    }*/
-    
-    /*public void exportToCSV() {
-        
-    }*/
    
-    
-    
-    
-    
-   
-    
+    /**
+     * Main method that starts the whole application
+     */
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
-        new App();
-        
+        new App();       
     }
 }
 
