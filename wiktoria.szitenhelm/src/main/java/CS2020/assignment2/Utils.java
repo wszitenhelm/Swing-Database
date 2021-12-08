@@ -143,7 +143,6 @@ class Utils {
             }
         }
         allsongs.sort((s1, s2) -> Math.abs(s1.length() - "a".length()) - Math.abs(s2.length() - "a".length()));
-        System.out.println(allsongs);
         ArrayList<String> shortestSongs = new ArrayList<String>();
         ArrayList<String> longestSongs = new ArrayList<String>();
         int i = 1;
@@ -167,9 +166,7 @@ class Utils {
             else {
                 break;
             }
-        }        
-        System.out.println(shortestSongs);
-        System.out.println(longestSongs);        
+        }             
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
         HashMap<LocalDate, String> datesAndArtists = new HashMap<>();
         ArrayList<LocalDate> allDates = new ArrayList<LocalDate>();
@@ -185,9 +182,6 @@ class Utils {
         Collections.sort(allDates);        
         LocalDate oldest = allDates.get(0);
         LocalDate youngest = allDates.get(allDates.size()-1);
-        System.out.println(youngest); 
-        System.out.println(oldest);
-        System.out.println(allDates);
         String youngestArtist = datesAndArtists.get(youngest);
         String oldestArtist = datesAndArtists.get(oldest);
         System.out.println(youngestArtist);                
