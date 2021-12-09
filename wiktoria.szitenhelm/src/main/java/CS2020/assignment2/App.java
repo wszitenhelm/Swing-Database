@@ -33,9 +33,9 @@ public class App
     public JList<Artist> jList;
     public JScrollPane scrollerA;
     public JMenuBar menuBar;
-    public JButton menu;    
-    public JButton dataMenu;
-    public JButton exportMenu;
+    public JMenuItem menu;    
+    public JMenuItem dataMenu;
+    public JMenuItem exportMenu;
     public GridBagLayout layoutEast;
     public GridBagConstraints c;
     public JPanel panelEast;
@@ -56,7 +56,7 @@ public class App
      * an user friendly GUI.
      */
     App() {
-        frame = new JFrame("Wiktoria Szitenhelm: Assignment 2");
+        frame = new JFrame("<Wiktoria Szitenhelm>: Assignment 2");
         panel = new JPanel();
         panel.setBackground(Color.darkGray);
         addManually = new JButton("Add Data Manually");
@@ -73,11 +73,11 @@ public class App
         scrollerA = new JScrollPane(jList);
         scrollerA.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);    
         menuBar = new JMenuBar();
-        menu = new JButton("About");
+        menu = new JMenuItem("About");
         menu.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Assignment 2 App v.0.1", "About", JOptionPane.INFORMATION_MESSAGE));
-        dataMenu = new JButton("Data");               
+        dataMenu = new JMenuItem("Data");               
         dataMenu.addActionListener(new DataListener());        
-        exportMenu = new JButton("Export to CSV");       
+        exportMenu = new JMenuItem("Export to CSV");       
         exportMenu.addActionListener(new ExportData());        
         menuBar.add(menu);
         menuBar.add(dataMenu);

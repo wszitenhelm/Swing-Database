@@ -9,8 +9,8 @@ import CS2020.assignment2.Utils;
 
 public class AppTest 
 {
-    String[] weekend = {"12 Apr 2014", "21 Jan 2012", "4 Dec 2021", "14 Dec 2014", "18 Feb 2017"}; 
-    String[] notWeekend = {"1 Aug 2019", "8 Feb 2018", "25 Jul 2017", "12 Jan 2015", "2 Apr 2014"}; 
+    String[] weekend = {"19 Apr 2014", "21 Jan 2012", "11 Dec 2021", "7 Dec 2014", "25 Feb 2017"}; 
+    String[] notWeekend = {"8 Aug 2019", "15 Feb 2018", "18 Jul 2017", "5 Jan 2015", "9 Apr 2014"}; 
     
     /**
      * Rigorous Test :-)
