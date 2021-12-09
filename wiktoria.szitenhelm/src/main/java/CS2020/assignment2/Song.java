@@ -13,7 +13,7 @@ public class Song {
     private int duration;
 
 /**
- * This method is created to return title of Artist 
+ * This method is created to return title of Artist.
  * @return title 
  */
     public String toString() { 

@@ -125,8 +125,6 @@ public class App
         textArea = new JTextArea();
         textArea.setForeground(Color.BLACK);
         textArea.setColumns(15);        
-        //textArea.setSelectedTextColor(null);
-        //textArea.setForeground(Color.BLACK);
         textArea.setLineWrap(true);
         textArea.setEditable(false);
         textArea.setEnabled(false);        
@@ -213,7 +211,7 @@ public class App
     }
     
     /**
-     * Class for listening for right mouse clicking.
+     * Class for listening for the right mouse clicking.
      * This class extends MouseAdapter.
      */
     class RightMouseListener extends MouseAdapter {
@@ -221,7 +219,7 @@ public class App
              * Method for perfoming action when event happens.
              * This method overrides method mouseClicked(). 
              * It lets by adding ActionListener to the created button,
-             * delete the artist if it was a right mouse click and if artist is selected.
+             * delete the artist if it was a right mouse click and if artists was selected.
              * @param e
              */
            @Override

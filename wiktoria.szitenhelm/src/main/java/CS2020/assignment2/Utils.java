@@ -48,7 +48,7 @@ class Utils {
      * It uses formatter to format date, gets day as day of week
      * and then checks if that day was weekend.
      * @param dob
-     * return true/false
+     * @return true/false
      */
     public static boolean checkIfBornOnWeekend(String dob){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
@@ -125,7 +125,7 @@ class Utils {
      * Creates ArrayList<String> called result that contains 
      * all the artists and their fields. 
      * @param list
-     * return result
+     * @return result
      */
     public static ArrayList<String> getDetails(JList<Artist> list){
         ArrayList<String> result = new ArrayList<String>();
@@ -184,7 +184,6 @@ class Utils {
         LocalDate youngest = allDates.get(allDates.size()-1);
         String youngestArtist = datesAndArtists.get(youngest);
         String oldestArtist = datesAndArtists.get(oldest);
-        System.out.println(youngestArtist);                
         Object[] logestSongArr = longestSongs.toArray(); 
         Object[] shortestSongArr = shortestSongs.toArray();         
         String longestSongString = "[" + String.join(", ", longestSongs) + "]";
