@@ -37,7 +37,7 @@ public class Song {
 
 /**
  * Method for setting Song's artistID.
- * @param artistID
+ * @param artistID artist ID to set 
  */ 
     public void setArtistID (UUID artistID) {
         this.artistID = artistID; 
@@ -53,7 +53,7 @@ public class Song {
 
 /**
  * Method for setting Song's title.
- * @param title
+ * @param title title to set
  */ 
     public void setTitle (String title) {
         this.title = title;
@@ -69,7 +69,7 @@ public class Song {
 
 /**
  * Method for setting Song's duration.
- * @param duration
+ * @param duration duration to set
  */ 
     public void setDuration (int duration) {
         this.duration = duration;

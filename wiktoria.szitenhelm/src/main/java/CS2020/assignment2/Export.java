@@ -27,7 +27,7 @@ public class Export {
      * from jList using ModelWithSorting and double for loop. 
      * Method creates two files artists.csv and songs.csv 
      * in a folder resources.    
-     * @param jList
+     * @param jList list from which take artists 
      */
     public static void exportCSV(JList<Artist> jList) {
         ModelWithSorting<Artist> artists = ((ModelWithSorting)jList.getModel());

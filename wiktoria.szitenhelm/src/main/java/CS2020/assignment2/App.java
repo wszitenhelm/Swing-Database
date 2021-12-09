@@ -185,7 +185,7 @@ public class App
                  * Method for perfoming action when event happens. 
                  * This method remove artist from the list 
                  * and set empty text for text fields. 
-                 * @param e
+                 * @param e instance of ActionEvent class
                  */
                 public void actionPerformed(ActionEvent e) {
                     int decision = JOptionPane.showConfirmDialog(frame, "Are you sure?");
@@ -220,7 +220,7 @@ public class App
              * This method overrides method mouseClicked(). 
              * It lets by adding ActionListener to the created button,
              * delete the artist if it was a right mouse click and if artists was selected.
-             * @param e
+             * @param e instance of ActionEvent class
              */
            @Override
            public void mouseClicked(MouseEvent e) {
@@ -253,7 +253,7 @@ public class App
          * Method for performing action when event happens.
          * This method overrides method actionPerformed().
          * Method gets details from jList and then display them.
-         * @param e
+         * @param e instance of ActionEvent class
          */
         @Override 
         public void actionPerformed(ActionEvent e) {
@@ -282,7 +282,7 @@ public class App
          * Overrides method actionPerformed().
          * Creates new Export object and calls method 
          * to export data and create csv fils.
-         * @param e
+         * @param e instance of ActionEvent class
          */
         @Override 
         public void actionPerformed(ActionEvent e) {
@@ -301,7 +301,7 @@ public class App
                  * Method for perfoming action when event happens.
                  * This method overrides method actionPerformed().
                  * It removes selected artist and set empty text fields.
-                 * @param e 
+                 * @param e instance of ActionEvent class
                  */
                 @Override 
                 public void actionPerformed(ActionEvent e) {
@@ -328,7 +328,7 @@ public class App
          * Overrides method actionPerformed.
          * Creates new Utils object and calls method
          * responsible for creating example artists.
-         * @param e 
+         * @param e instance of ActionEvent class
          */
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -349,7 +349,7 @@ public class App
          * Overrides method actionPerformed().
          * Creates new Utils object and calls method
          * responsible for reading artists from database.
-         * @param e 
+         * @param e instance of ActionEvent class
          */
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -362,6 +362,8 @@ public class App
    
     /**
      * Main method that starts the whole application
+     * with parameter args. 
+     * @param args String of arguments 
      */
     public static void main( String[] args )
     {

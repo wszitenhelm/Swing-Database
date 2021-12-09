@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
 * This class creates Artist object that has instance variables: 
 * UUID artistID, String firstName, String lastName, String dob, 
-* String placeOfBirth and ArrayList<Song> songs. 
+* String placeOfBirth and ArrayList songs. 
 * This public class implements Comparable.
 */
 public class Artist implements Comparable<Artist>{
@@ -27,7 +27,7 @@ public class Artist implements Comparable<Artist>{
 /**
  * This method overrides compareTo() method 
  * to compare one firstName with the other 
- * @param o
+ * @param o Artist object to compare
  * @return result of comparison 
  */
     @Override
@@ -46,7 +46,7 @@ public class Artist implements Comparable<Artist>{
 
 /**
  * Method for setting ArtistID.
- * @param artistID
+ * @param artistID artist's ID to set
  */ 
     public void setArtistID (UUID artistID) {
         this.artistID = artistID;
@@ -62,7 +62,7 @@ public class Artist implements Comparable<Artist>{
 
 /**
  * Method for setting Artist's firstName.
- * @param firstName
+ * @param firstName first name to set
  */ 
     public void setFirstName (String firstName) {
         this.firstName = firstName;
@@ -78,7 +78,7 @@ public class Artist implements Comparable<Artist>{
 
 /**
  * Method for setting Artist's lastName.
- * @param lastName
+ * @param lastName last name to set
  */ 
     public void setLastName (String lastName) {
         this.lastName = lastName;
@@ -94,7 +94,7 @@ public class Artist implements Comparable<Artist>{
 
 /**
  * Method for setting Artist's dob.
- * @param dob
+ * @param dob date of birth to set
  */ 
     public void setDob (String dob) {
         this.dob = dob;
@@ -110,7 +110,7 @@ public class Artist implements Comparable<Artist>{
 
 /**
  * Method for setting Artist's placeOfBirth.
- * @param placeOfBirth
+ * @param placeOfBirth place of birth to set
  */ 
     public void setPlaceOfBirth (String placeOfBirth) {
         this.placeOfBirth = placeOfBirth;
@@ -126,7 +126,7 @@ public class Artist implements Comparable<Artist>{
 
 /**
  * Method for setting Artist's songs.
- * @param songs
+ * @param songs song to add to Artist's list of songs
  */ 
     public void setSongs(ArrayList<Song> songs) {
         this.songs = songs;
@@ -142,7 +142,7 @@ public class Artist implements Comparable<Artist>{
  
 /**
  * Method for adding songs to listOfSongs.
- * @param songs
+ * @param song song to add to list of songs 
  */ 
     public void addSong (Song song) {
         ArrayList<Song> listOfSongs = this.getSongs();

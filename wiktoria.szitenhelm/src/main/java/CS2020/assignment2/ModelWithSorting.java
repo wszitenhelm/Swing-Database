@@ -28,7 +28,7 @@ public class ModelWithSorting<E extends Comparable<E>> extends AbstractListModel
 
 /**
  * Method for adding toAdd element to the ArrayList called elements.
- * @param toAdd
+ * @param toAdd element to add
  */
     public void addElement(E toAdd) {
         this.elements.add(toAdd);
@@ -37,7 +37,7 @@ public class ModelWithSorting<E extends Comparable<E>> extends AbstractListModel
 
 /**
  * Method for removing element at index i from the ArrayList called elements.
- * @param i
+ * @param i index of element to be removed
  */
     public void remove(int i) {
         this.elements.remove(i);
@@ -57,7 +57,7 @@ public class ModelWithSorting<E extends Comparable<E>> extends AbstractListModel
 /**
  * This method overrides getElementAt() method.
  * Returns element at index x from the ArrayList called elements.
- * @param x
+ * @param x index of element that want to be gotten 
  * @return element at index x from the ArrayList
  */    
     @Override 

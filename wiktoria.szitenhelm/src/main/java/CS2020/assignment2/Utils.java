@@ -25,7 +25,7 @@ class Utils {
      * Method for returning songs' durations and titles
      * as HashMap named songs which is created inside this method. 
      * Method created with lambda expression. 
-     * @param listOfSongs
+     * @param listOfSongs list of songs from which return titles and durations
      * @return songs
      */
     public static HashMap<UUID, String> returnSongDurationAndTitleFormatted(ArrayList<Song> listOfSongs) {
@@ -47,7 +47,7 @@ class Utils {
      * Method for checking if Artist was born on weekend.
      * It uses formatter to format date, gets day as day of week
      * and then checks if that day was weekend.
-     * @param dob
+     * @param dob date of birth to check
      * @return true/false
      */
     public static boolean checkIfBornOnWeekend(String dob){
@@ -66,7 +66,7 @@ class Utils {
      * Method for creating example artists 
      * with all the needed fields. Method also creates songs 
      * and adds them as artists' fields. 
-     * @param ist
+     * @param list list to which add created example artists
      */
     public static void createExampleArtists(JList<Artist> list) {
         Artist artist1 = new Artist();
@@ -124,7 +124,7 @@ class Utils {
      * Method for getting all the details about artists from the list.
      * Creates ArrayList<String> called result that contains 
      * all the artists and their fields. 
-     * @param list
+     * @param list list from which take artists to get details about
      * @return result
      */
     public static ArrayList<String> getDetails(JList<Artist> list){
@@ -201,7 +201,7 @@ class Utils {
      * Method for reading database to get artists and their
      * songs in order to add them to the list. 
      * Method works by executing two queries. 
-     * @param list
+     * @param list list to take artists from to get details about 
      */
     public static void readArtistAndSongsFromDatabase(JList<Artist> list) {
         Connection con=null;
