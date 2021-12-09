@@ -19,8 +19,7 @@ import java.util.Collections;
  * reading database to access artists 
  * and getting details about created/read from database artists.
  */
-class Utils {
-
+public class Utils {
     /**
      * Method for returning songs' durations and titles
      * as HashMap named songs which is created inside this method. 
@@ -122,7 +121,7 @@ class Utils {
 
     /**
      * Method for getting all the details about artists from the list.
-     * Creates ArrayList<String> called result that contains 
+     * Creates ArrayList called result that contains 
      * all the artists and their fields. 
      * @param list list from which take artists to get details about
      * @return result

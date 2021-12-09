@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.UUID;
-import java.awt.Color;
 
 /**
  * Class for running the whole Swing Music application.
@@ -123,7 +122,6 @@ public class App
         c.gridy = 2;
         panelEast.add(fieldBow, c);
         textArea = new JTextArea();
-        textArea.setForeground(Color.BLACK);
         textArea.setColumns(15);        
         textArea.setLineWrap(true);
         textArea.setEditable(false);
